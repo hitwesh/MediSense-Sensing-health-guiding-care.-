@@ -16,7 +16,7 @@ It integrates the **Gemini API** along with other AI models to provide quick, ac
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 **Frontend:** HTML, CSS, JavaScript, React (optional: TailwindCSS / Bootstrap)  
 **Backend:** Flask / FastAPI (Python) or Node.js  
