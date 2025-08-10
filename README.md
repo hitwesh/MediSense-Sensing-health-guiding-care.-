@@ -31,23 +31,53 @@ It integrates the **Gemini API** along with other AI models to provide quick, ac
 
 MediSense/
 │
-├── frontend/ # All UI/UX components
-│ ├── src/
-│ ├── public/
-│ └── package.json
+├── frontend/                          # React/Next.js frontend (Vercel)
+│   ├── public/                        # Static assets (images, icons, logos)
+│   ├── src/
+│   │   ├── components/                # Reusable UI components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── SymptomForm.jsx
+│   │   │   └── ResultCard.jsx
+│   │   ├── pages/                     # Next.js pages (Home, Results, About)
+│   │   │   ├── index.jsx               # Homepage
+│   │   │   ├── results.jsx             # Results display page
+│   │   │   └── about.jsx               # About / contact page
+│   │   ├── styles/                     # CSS/SCSS files
+│   │   ├── utils/                      # Helper functions for API calls
+│   │   └── App.js
+│   ├── package.json
+│   └── README.md
 │
-├── backend/ # API & server logic
-│ ├── app.py
-│ ├── routes/
-│ └── requirements.txt
+├── backend/                           # FastAPI or Flask backend (Heroku)
+│   ├── app/
+│   │   ├── main.py                     # Entry point for API
+│   │   ├── routes/                     # API routes
+│   │   │   ├── symptoms.py              # Symptom analysis endpoint
+│   │   │   └── auth.py                  # (Optional) Auth routes
+│   │   ├── services/                   # AI model + business logic
+│   │   │   ├── ai_model.py
+│   │   │   └── gemini_integration.py
+│   │   ├── database/                   # DB connection logic
+│   │   │   └── db.py
+│   │   └── models/                     # DB models (SQLAlchemy/Pydantic)
+│   ├── requirements.txt                # Python dependencies
+│   ├── runtime.txt                     # Python version for Heroku
+│   └── Procfile                        # Heroku startup command
 │
-├── database/ # DB schema & setup scripts
+├── database/                           # DB schema, seed data
+│   ├── schema.sql                      # SQL schema for DB
+│   ├── seed_data.sql                   # Initial test data
+│   └── migrations/                     # DB migration files
 │
-├── ai_model/ # ML model training & integration code
+├── docs/                               # Documentation & diagrams
+│   ├── architecture_diagram.png
+│   ├── workflow_chart.png
+│   └── project_documentation.pdf
 │
-├── docs/ # Documentation, diagrams, presentations
-│
-└── README.md
+├── .gitignore
+└── README.md                           # Root project README
+
 
 
 
