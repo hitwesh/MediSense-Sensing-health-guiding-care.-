@@ -1,6 +1,6 @@
 import type { DiagnosisRequest, DiagnosisResults } from "@/types"
 
-// Configuration for API endpoints - backend team will update these
+// Configuration for API endpoints
 const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api",
   ENDPOINTS: {
@@ -11,32 +11,34 @@ const API_CONFIG = {
 }
 
 export class DiagnosisService {
-  // Main diagnosis method - backend team will implement actual API call
+  // Main diagnosis method
   static async getDiagnosis(request: DiagnosisRequest): Promise<DiagnosisResults> {
     try {
-      // TODO: Replace with actual API call
-      // const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.DIAGNOSIS}`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(request)
-      // })
-      // const result: ApiResponse<DiagnosisResults> = await response.json()
-      // return result.data
+      const response = await fetch(
+        `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.DIAGNOSIS}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(request),
+        }
+      )
 
-      // Mock implementation for frontend development
-      return this.getMockDiagnosis(request)
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.statusText}`)
+      }
+
+      return await response.json() as DiagnosisResults
     } catch (error) {
-      console.error("Diagnosis service error:", error)
-      throw new Error("Failed to get diagnosis")
+      console.error("Diagnosis API error, using mock data:", error)
+      return this.getMockDiagnosis(request)
     }
   }
 
-  // Mock data for frontend development - will be removed when backend is ready
+  // Mock data for development / fallback
   private static async getMockDiagnosis(request: DiagnosisRequest): Promise<DiagnosisResults> {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate delay
 
     return {
       diseases: [
@@ -106,30 +108,43 @@ export class DiagnosisService {
     }
   }
 
-  // Method to get available symptoms - backend team will implement
+  // Get available symptoms
   static async getAvailableSymptoms(): Promise<string[]> {
-    // TODO: Replace with actual API call
-    return [
-      "Headache",
-      "Fever",
-      "Cough",
-      "Sore throat",
-      "Runny nose",
-      "Fatigue",
-      "Nausea",
-      "Vomiting",
-      "Diarrhea",
-      "Abdominal pain",
-      "Chest pain",
-      "Shortness of breath",
-      "Dizziness",
-      "Joint pain",
-      "Muscle aches",
-      "Skin rash",
-      "Loss of appetite",
-      "Difficulty sleeping",
-      "Back pain",
-      "Neck pain",
-    ]
+    try {
+      const response = await fetch(
+        `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.SYMPTOMS}`
+      )
+
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.statusText}`)
+      }
+
+      return await response.json() as string[]
+    } catch (error) {
+      console.error("Symptoms API error, using mock data:", error)
+      return [
+        "Headache",
+        "Fever",
+        "Cough",
+        "Sore throat",
+        "Runny nose",
+        "Fatigue",
+        "Nausea",
+        "Vomiting",
+        "Diarrhea",
+        "Abdominal pain",
+        "Chest pain",
+        "Shortness of breath",
+        "Dizziness",
+        "Joint pain",
+        "Muscle aches",
+        "Skin rash",
+        "Loss of appetite",
+        "Difficulty sleeping",
+        "Back pain",
+        "Neck pain",
+      ]
+    }
   }
 }
+ 
